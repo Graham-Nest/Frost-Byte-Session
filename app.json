@@ -1,8 +1,8 @@
 {
     "name": "Frost session",
-    "description": "a session generator for frost-bot",
-    "logo": "https://files.catbox.moe/jl104w.jpeg",
-    "repository": "https://github.com/Graham-Nest/Frost_Byte-Ai",
+    "description": "a session generator for raven-bot",
+    "logo": "https://files.catbox.moe/ojo6av.jpg",
+    "repository": "https://github.com/Graham-Nest/Frost_Byte-Au",
     "keywords": ["FROST-BOT"],
     "success_url": "/", 
     "buildpacks": [{ "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest" } ],
