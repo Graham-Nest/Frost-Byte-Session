@@ -3,529 +3,327 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PAIR CODE</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-
+  <title>Pair Code</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <style>
-    :root {
-      /* Original :root variables from provided HTML */
-      --primary-color: #00ffff;
-      --background-color: #0a0f2c;
-      --container-bg: #121833;
-      --text-color: #ffffff;
-      --hover-color: #1e2450;
-      --border-color: rgba(0, 255, 255, 0.2);
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
 
-      /* New variables from user's CSS snippet */
-      --neon-purple: #ff00ff; /* Vibrant Magenta for Neon Purple */
-      --deep-dark-blue: #000033; /* Deep, dark blue */
-      --deep-dark-blue-glow: rgba(0, 0, 50, 0.7); /* Subtle glow for dark blue */
-      --neon-purple-glow: rgba(255, 0, 255, 0.7); /* Glow for neon purple */
-
-      /* Background and Sci-fi Mode Variables from user's CSS snippet */
-      --background-image: url('https://files.catbox.moe/jl104w.jpeg'); /* Background from first snippet */
-      --secondary-color: #ffffff; /* Original White */
-      --text-shadow-color: rgba(0, 191, 255, 0.7); /* Original Text Shadow */
-      --sci-fi-primary: #00ffff; /* Cyan */
-      --sci-fi-secondary: #ff00ff; /* Magenta */
-      --sci-fi-accent: #00ff00; /* Lime Green */
-      --sci-fi-dark-bg: #1a1a2e; /* Deep Space Purple/Blue */
-      --sci-fi-mid-bg: #2a2a3e; /* Slightly Lighter Purple/Blue */
-      --sci-fi-glow-color-cyan: rgba(0, 255, 255, 0.8); /* Cyan Glow */
-      --sci-fi-glow-color-magenta: rgba(255, 0, 255, 0.8); /* Magenta Glow */
-      --sci-fi-glow-color-green: rgba(0, 255, 0, 0.8); /* Green Glow */
-    }
-
-    /* Body styles from user's CSS snippet, overriding original */
     body {
-        margin: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font from first snippet */
-        color: var(--secondary-color);
-        background-color: #0a0a0a; /* Dark background */
-        overflow: hidden; /* Prevent scrollbars */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        position: relative;
-        background-image: var(--background-image); /* Use the variable */
-        background-size: cover; /* This ensures the background covers the entire viewport */
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-
-    /* Background container styles from user's CSS snippet */
-    .background-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 0;
-        flex-direction: column; /* Added to stack overlay and footer */
-    }
-
-    /* Shapes container styles from user's CSS snippet */
-    .shapes-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        pointer-events: none; /* Allows clicks to pass through to elements below */
-        transition: opacity 0.5s ease-in-out; /* Smooth transition for opacity change */
-    }
-
-    /* Shape styles from user's CSS snippet */
-    .shape {
-        position: absolute;
-        background-color: rgba(0, 191, 255, 0.3); /* Semi-transparent blue */
-        box-shadow: 0 0 15px rgba(0, 191, 255, 0.6), 0 0 5px rgba(0, 191, 255, 0.4);
-        animation-timing-function: ease-in-out;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-        border-radius: 50%; /* Default for circle */
-    }
-
-    /* Specific shape styles from user's CSS snippet */
-    .shape.circle { border-radius: 50%; }
-    .shape.triangle {
-        width: 0; height: 0; background-color: transparent;
-        border-left: 30px solid transparent; border-right: 30px solid transparent;
-        border-bottom: 60px solid rgba(0, 191, 255, 0.3);
-    }
-    .shape.square { border-radius: 10px; }
-    .shape.hexagon {
-        width: 80px; height: 40px; background-color: rgba(0, 191, 255, 0.3);
-        position: absolute;
-        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    }
-
-    /* General animation for shapes from user's CSS snippet */
-    @keyframes float {
-        0% { transform: translateY(0) scale(1); opacity: 0.5; }
-        100% { transform: translateY(-200px) scale(1.5); opacity: 0.8; }
-    }
-    @keyframes float-rotate {
-        0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.5; }
-        100% { transform: translateY(-200px) scale(1.5) rotate(360deg); opacity: 0.8; }
-    }
-
-    /* Overlay styles from user's CSS snippet, with added margin and adjusted dimensions */
-    .overlay {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        padding: 20px; /* This padding is internal to the overlay */
-        margin: 1cm; /* This adds a 1cm margin around the overlay, creating the gap from the body background */
-        backdrop-filter: blur(8px);
-        background: rgba(10, 10, 25, 0.7);
-        border-radius: 15px;
-        box-shadow: 0 0 20px var(--sci-fi-glow-color-cyan), 0 0 40px var(--sci-fi-glow-color-magenta);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        /* Adjust width and max-width to account for the 1cm margin on both sides */
-        max-width: calc(700px - 2cm);
-        width: calc(90% - 2cm);
-        transition: box-shadow 0.5s ease-in-out;
-    }
-
-    /* Original CSS from provided HTML, modified where necessary */
-    html, body {
+      font-family: 'Orbitron', sans-serif;
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif; /* Font from first snippet */
-      color: var(--text-color); /* Inherited from :root */
-      height: 100%;
-      overflow: hidden; /* Prevent scrollbars */
-    }
-
-    body { /* Overridden by new body styles */
+      height: 100vh;
+      /* Modified: Dark purple gradient background */
+      background: linear-gradient(135deg, #1a002e, #3c005a, #2c003e);
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      overflow: hidden;
       position: relative;
+    }
+
+    /* Container for floating circles */
+    .floating-circles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* Ensures circles don't spill out */
+      z-index: 1; /* Positioned above the starfield (z-index: 0) but below content (z-index: 2) */
+    } 
+
+    /* Style for individual floating circles */
+    .floating-circle {
+      position: absolute;
+      /* Modified: Pink/purple gradient for circles */
+      background: radial-gradient(circle, rgba(255, 100, 200, 0.1) 0%, rgba(200, 0, 255, 0.05) 70%);
+      border-radius: 50%;
+      opacity: 0.5;
+      /* Modified: Neon pink glow for circles */
+      box-shadow: 0 0 15px rgba(255, 0, 170, 0.3);
+      pointer-events: none; /* So they don't interfere with mouse events */
+      animation: float 15s ease-in-out infinite alternate; /* Default animation */
+    }
+
+    /* Keyframes for the floating animation */
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: translateY(-150px) translateX(50px) scale(1.2); /* Float up and slightly right */
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(0) translateX(-50px) scale(1); /* Return to original position, slightly left */
+        opacity: 0.5;
+      }
+    }
+
+    .display-text {
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.15;
+      z-index: 0;
+      animation: stars 60s linear infinite;
+    }
+
+    @keyframes stars {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
+
+    .orbit {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border: 2px dashed rgba(0, 255, 255, 0.2);
+      border-radius: 50%;
+      animation: rotateOrbit 20s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes rotateOrbit {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .container {
-      position: relative;
-      background: var(--container-bg);
-      padding: 30px; /* This padding is internal to the container */
-      width: 100%; /* This makes the container fill its parent (.overlay) */
-      max-width: 400px; /* This caps the container's width */
-      border-radius: 18px;
-      z-index: 10;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .scanner-rings {
-      position: absolute;
-      top: -30px;
-      left: -30px;
-      width: calc(100% + 60px);
-      height: calc(100% + 60px);
-      pointer-events: none;
-      display: none; /* Default display */
-      z-index: 1;
-    }
-
-    .container.scanning .scanner-rings {
-      display: block;
-    }
-
-    .ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      border: 2px solid var(--primary-color);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      animation: rotate 5s linear infinite;
-      opacity: 0.1;
-    }
-
-    .ring:nth-child(1) { width: 120%; height: 120%; animation-duration: 5s; }
-    .ring:nth-child(2) { width: 140%; height: 140%; animation-duration: 7s; border-color: rgba(0, 255, 255, 0.1); }
-    .ring:nth-child(3) { width: 160%; height: 160%; animation-duration: 9s; border-color: rgba(0, 255, 255, 0.07); }
-
-    @keyframes rotate {
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .title {
-      font-size: 30px;
-      font-weight: 800;
-      color: var(--primary-color);
-    }
-
-    .subtitle {
-      font-size: 15px;
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .input-group {
-      margin-top: 20px;
-    }
-
-    .input-label {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-
-    .input-field, .generate-btn, .copy-btn {
+    .box {
       width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      border: none;
+      max-width: 320px;
+      margin: 0 16px;
+      padding: 25px;
+      /* Modified: Dark purple background for the inner container */
+      background: rgba(44, 0, 62, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      /* Modified: Neon pink glow and subtle white inset shadow */
+      box-shadow: 0 0 25px rgba(255, 0, 170, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.1);
+      text-align: center;
+      /* Modified: Subtle white border */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 1s ease-in-out;
       box-sizing: border-box;
     }
 
-    .input-field {
-      background: var(--hover-color);
+    @keyframes fadeIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .centered-text {
       color: white;
-      border: 1px solid var(--border-color);
+      margin-bottom: 10px;
     }
 
-    .generate-btn {
-      background: var(--primary-color);
-      color: #000;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-
-    .generate-btn:hover { opacity: 0.9; }
-
-    .code-display {
-      display: none;
-      margin-top: 20px;
-      background: var(--hover-color);
-      border: 1px solid var(--border-color);
-      padding: 12px;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    .copy-btn {
-      display: none;
-      margin-top: 16px;
-      background: var(--hover-color);
-      color: white;
-      border: 1px solid var(--border-color);
-      cursor: pointer;
-    }
-
-    .copy-btn:hover { background: #2c3555; }
-
-    .footer {
-      text-align: center;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.4);
-      margin-top: 20px;
-    }
-
-    /* Removed .bg-shapes styles as they are replaced by JS */
-
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+    .input-container-vertical {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-
-    .modal-content {
-      background: var(--container-bg); /* Using container background */
-      padding: 25px;
-      border-radius: 15px;
-      text-align: center;
-      color: white;
-      box-shadow: 0 0 20px var(--sci-fi-glow-color-cyan), 0 0 40px var(--sci-fi-glow-color-magenta); /* Enhanced glow */
-    }
-
-    .modal-content h2 {
-      color: var(--primary-color);
-    }
-
-    .modal-content button {
-      padding: 10px 20px;
+      flex-direction: column;
       margin-top: 15px;
-      margin-inline: 10px;
+      gap: 10px;
+    }
+
+    .styled-input,
+    .styled-submit {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .styled-input {
       border: none;
-      border-radius: 8px;
+      background: #f4f4f4;
+      color: #000;
+    }
+
+    .styled-submit {
+      /* Modified: Neon pink background */
+      background: #ff00cc;
+      color: white;
+      border: none;
       font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease;
     }
 
-    .modal-content .yes { background: var(--primary-color); color: #000; }
-    .modal-content .no { background: #333; color: white; }
-    .modal-content .yes:hover { background: #00e6e6; } /* Slightly brighter cyan on hover */
-    .modal-content .no:hover { background: #555; } /* Slightly darker grey on hover */
+    .styled-submit:hover {
+      /* Modified: Neon pink to purple gradient on hover */
+      background: linear-gradient(135deg, #ff00cc, #cc00ff);
+    }
+
+    #pair {
+      margin-top: 15px;
+    }
+
+    #copy-btn {
+      display: none;
+      margin-top: 10px;
+      background: #00c9a7;
+      border: none;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    #copy-btn:hover {
+      background: #00b39e;
+    }
+
+    @media (max-width: 500px) {
+      .styled-input,
+      .styled-submit,
+      #copy-btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Floating Circles Container -->
+  <div class="floating-circles-container"></div>
 
-  <!-- New background and shapes containers -->
-  <div class="background-container"></div>
-  <div class="shapes-container"></div>
+  <div class="orbit"></div>
+  <div class="container">
+    <div class="box" id="box">
+      <i class="fa fa-user" style="color:white; font-size: 20px;"></i>
+      <h3 class="centered-text display-text">FROST-BYTE PAIR CODE</h3>
+      <h6 class="centered-text display-text">Powered By Dev-Graham</h6>
+      <h6 class="centered-text display-text">Enter Your Number with Country Code</h6>
 
-  <!-- Audio and Modal -->
-  <audio id="myAudio" loop muted>
-    <source src="https://files.catbox.moe/l9319m.mp3" type="audio/mp3">
-  </audio>
+      <div class="input-container-vertical">
+        <input placeholder="1234567890" type="number" id="number" class="styled-input" />
+        <button id="submit" class="styled-submit display-text">Submit</button>
+      </div>
 
-  <div class="modal" id="musicModal">
-    <div class="modal-content">
-      <h2>🎵 Background Music</h2>
-      <p>Would you like to play some background music while using the session portal?</p>
-      <button class="yes" onclick="playMusic()">Yes, Play Music</button>
-      <button class="no" onclick="closeModal()">No, Thanks</button>
+      <div id="pair" class="display-text"></div>
+      <button id="copy-btn" class="display-text">Copy Code</button>
     </div>
   </div>
 
-  <!-- Overlay containing the main application content -->
-  <div class="overlay">
-    <div class="container" id="box">
-      <div class="scanner-rings">
-        <div class="ring"></div>
-        <div class="ring"></div>
-        <div class="ring"></div>
-      </div>
-
-      <div class="header">
-        <h1 class="title">SHADOW XTECH</h1>
-        <p class="subtitle">Generate your WhatsApp pair code</p>
-      </div>
-
-      <div class="input-group">
-        <label class="input-label">Enter your WhatsApp number with country code</label>
-        <input type="text" id="mobileNumber" class="input-field" placeholder="+1234567890">
-      </div>
-
-      <button class="generate-btn" id="submit">
-        <i class="fas fa-key"></i> Generate Code
-      </button>
-
-      <div class="code-display" id="codeDisplay"></div>
-      <button class="copy-btn" id="copy" onclick="copyCode()">
-        <i class="fas fa-copy"></i> Copy Code
-      </button>
-
-      <div class="footer">Shadow-Xtech | 2025</div>
-    </div>
-  </div>
-
-  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
-    // JavaScript for dynamic shapes
-    const shapesContainer = document.querySelector('.shapes-container');
-    const shapeTypes = ['circle', 'triangle', 'square', 'hexagon'];
-    const numberOfShapes = 30; // Number of shapes to display
-
-    function createShape() {
-        const shapeElement = document.createElement('div');
-        shapeElement.classList.add('shape');
-
-        const randomType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
-        shapeElement.classList.add(randomType);
-
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-        const size = Math.random() * 50 + 20; // Size between 20px and 70px
-
-        shapeElement.style.width = `${size}px`;
-        shapeElement.style.height = `${size}px`;
-        // Position shapes randomly within the viewport
-        shapeElement.style.left = `${Math.random() * (viewportWidth - size)}px`;
-        shapeElement.style.top = `${Math.random() * (viewportHeight - size)}px`;
-
-        const animationDuration = Math.random() * 10 + 5; // Duration between 5s and 15s
-        const animationDelay = Math.random() * 5; // Delay between 0s and 5s
-        const animationDirection = Math.random() < 0.5 ? 'alternate' : 'normal';
-        const animationTiming = ['ease-in-out', 'ease-linear', 'ease-out'][Math.floor(Math.random() * 3)];
-
-        shapeElement.style.animationDuration = `${animationDuration}s`;
-        shapeElement.style.animationDelay = `${animationDelay}s`;
-        shapeElement.style.animationDirection = animationDirection;
-        shapeElement.style.animationTimingFunction = animationTiming;
-
-        // Assign appropriate animation based on shape type
-        if (randomType === 'triangle' || randomType === 'hexagon') {
-            shapeElement.style.animationName = 'float-rotate';
-        } else {
-            shapeElement.style.animationName = 'float';
-        }
-
-        shapesContainer.appendChild(shapeElement);
-    }
-
-    // Generate shapes on load
-    for (let i = 0; i < numberOfShapes; i++) {
-        createShape();
-    }
-
-    // Handle window resizing to regenerate shapes for the new viewport size
-    window.addEventListener('resize', () => {
-        shapesContainer.innerHTML = ''; // Clear existing shapes
-        for (let i = 0; i < numberOfShapes; i++) {
-            createShape(); // Regenerate shapes
-        }
-    });
-  </script>
-
-  <script>
-    // Original JavaScript for application functionality
+    const pairEl = document.getElementById("pair");
     const submitBtn = document.getElementById("submit");
-    const mobileInput = document.getElementById("mobileNumber");
-    const codeDisplay = document.getElementById("codeDisplay");
-    const copyBtn = document.getElementById("copy");
-    const box = document.getElementById("box");
+    const numberInput = document.getElementById("number");
+    const copyBtn = document.getElementById("copy-btn");
+
+    let lastCode = '';
+
+    async function copyToClipboard() {
+      if (!lastCode) return;
+      await navigator.clipboard.writeText(lastCode);
+      copyBtn.innerText = "Copied!";
+      setTimeout(() => copyBtn.innerText = "Copy Code", 1500);
+    }
 
     submitBtn.addEventListener("click", async (e) => {
       e.preventDefault();
-      const number = mobileInput.value.trim();
-      if (!number) {
-        codeDisplay.style.display = 'block';
-        codeDisplay.innerHTML = '<span style="color: red;">Please enter a valid number</span>';
+      let rawNumber = numberInput.value.replace(/[^0-9]/g, "");
+
+      if (!rawNumber) {
+        pairEl.innerHTML = `<span class="display-text" style="color:white;font-weight:bold">Enter your WhatsApp number with Country Code</span>`;
         return;
       }
 
-      box.classList.add("scanning");
-      codeDisplay.style.display = "none";
+      if (rawNumber.length < 11) {
+        pairEl.innerHTML = `<span class="display-text" style="color:orange;font-weight:bold">Invalid Number</span>`;
+        return;
+      }
+
+      let formatted = "+" + rawNumber;
+      numberInput.type = "text";
+      numberInput.value = formatted;
+      numberInput.style = "color:black;font-size:20px";
+
+      pairEl.innerHTML = `<span class="display-text" style="color:white;font-weight:bold">Please Wait...</span>`;
       copyBtn.style.display = "none";
 
       try {
-        // NOTE: The original axios call `/code?number=${number.replace(/[^0-9]/g, "")}`
-        // is a placeholder for a backend API. This will not work without a backend.
-        // For demonstration purposes, we'll simulate a response.
-        // In a real scenario, this would fetch from a server.
-        // await axios(`/code?number=${number.replace(/[^0-9]/g, "")}`);
-        // const code = response.data.code || "Service Unavailable";
-
-        // Mocking a response for demonstration purposes
-        const mockCode = Math.random().toString(36).substring(2, 10).toUpperCase();
-        codeDisplay.innerHTML = `<span style="color: var(--primary-color);">CODE: ${mockCode}</span>`;
-
-      } catch (error) {
-        console.error("Error generating code:", error);
-        codeDisplay.innerHTML = '<span style="color: red;">Failed to generate code</span>';
-      } finally {
-        box.classList.remove("scanning");
-        codeDisplay.style.display = "block";
-        copyBtn.style.display = "block";
+        // Assuming the API endpoint is relative to the current origin
+        const { data } = await axios.get(`/code?number=${rawNumber}`);
+        lastCode = data.code || "Service Unavailable";
+        pairEl.innerHTML = `<span class="display-text" id="copy" style="color:red;font-weight:bold">CODE: <span style="color:white;">${lastCode}</span></span>`;
+        copyBtn.style.display = "inline-block";
+      } catch (err) {
+        console.error("Error fetching code:", err); // Log the error for debugging
+        pairEl.innerHTML = `<span class="display-text" style="color:red;font-weight:bold">Error fetching code.</span>`;
+        copyBtn.style.display = "none";
       }
     });
 
-    function copyCode() {
-      const code = codeDisplay.innerText.replace('CODE: ', '');
-      if (code && code !== 'Failed to generate code' && code !== 'Please enter a valid number') {
-        navigator.clipboard.writeText(code).then(() => {
-          copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-          setTimeout(() => {
-            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
-          }, 2000);
-        }).catch(err => {
-          console.error('Failed to copy code: ', err);
-          copyBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Copy Failed';
-          setTimeout(() => {
-            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
-          }, 2000);
-        });
-      }
+    copyBtn.addEventListener("click", copyToClipboard);
+
+    // --- Floating Circles Logic ---
+    const floatingCirclesContainer = document.querySelector('.floating-circles-container');
+
+    function createFloatingCircle() {
+      const circle = document.createElement('div');
+      circle.classList.add('floating-circle');
+
+      // Random size: between 150px and 250px for "big" circles
+      const size = Math.random() * 100 + 150; // Range: 150px to 250px
+      circle.style.width = `${size}px`;
+      circle.style.height = `${size}px`;
+
+      // Random position: place them within the viewport
+      // To ensure they are visible and don't get cut off too much at the edges,
+      // we can adjust the positioning range slightly or ensure the animation
+      // doesn't push them too far off screen.
+      // For now, let's keep the 0-100% range, as the animation's transform
+      // is relative to their initial position.
+      const top = Math.random() * 100; // 0% to 100% of viewport height
+      const left = Math.random() * 100; // 0% to 100% of viewport width
+      circle.style.top = `${top}%`;
+      circle.style.left = `${left}%`;
+
+      // Random animation duration: between 10s and 25s
+      const duration = Math.random() * 15 + 10;
+      circle.style.animationDuration = `${duration}s`;
+
+      // Random animation delay: between 0s and 10s
+      const delay = Math.random() * 10;
+      circle.style.animationDelay = `${delay}s`;
+
+      // Random opacity: between 0.2 and 0.6 for a subtle effect
+      circle.style.opacity = Math.random() * 0.4 + 0.2;
+
+      floatingCirclesContainer.appendChild(circle);
     }
 
-    function playMusic() {
-      const audio = document.getElementById('myAudio');
-      audio.muted = false;
-      audio.play().catch(error => {
-        console.log("Autoplay prevented:", error);
-        // Optionally, inform the user that interaction is needed to play audio
-      });
-      closeModal();
+    // Create 5 floating circles as requested
+    const numberOfCircles = 5; // Changed from 20 to 5
+    for (let i = 0; i < numberOfCircles; i++) {
+      createFloatingCircle();
     }
-
-    function closeModal() {
-      document.getElementById('musicModal').style.display = 'none';
-    }
-
-    // Show modal on page load
-    document.addEventListener('DOMContentLoaded', (event) => {
-        document.getElementById('musicModal').style.display = 'flex';
-    });
-
-    // Attempt to play music on first user interaction (e.g., click)
-    document.addEventListener('click', function () {
-      const audio = document.getElementById('myAudio');
-      if (audio.paused && !audio.muted) {
-        audio.play().catch(error => {
-          console.log("Autoplay prevented on click:", error);
-        });
-      }
-    }, { once: true });
-
+    // --- End Floating Circles Logic ---
   </script>
-
 </body>
 </html>
