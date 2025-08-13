@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PAIR CODE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+  <style>
+    :root {
+      /* Original :root variables from provided HTML */
+      --primary-color: #00ffff;
+      --background-color: #0a0f2c;
+      --container-bg: #121833;
+      --text-color: #ffffff;
+      --hover-color: #1e2450;
+      --border-color: rgba(0, 255, 255, 0.2);
+
+      /* New variables from user's CSS snippet */
+      --neon-purple: #ff00ff; /* Vibrant Magenta for Neon Purple */
+      --deep-dark-blue: #000033; /* Deep, dark blue */
+      --deep-dark-blue-glow: rgba(0, 0, 50, 0.7); /* Subtle glow for dark blue */
+      --neon-purple-glow: rgba(255, 0, 255, 0.7); /* Glow for neon purple */
+
+      /* Background and Sci-fi Mode Variables from user's CSS snippet */
+      --background-image: url('https://files.catbox.moe/jl104w.jpeg'); /* Background from first snippet */
+      --secondary-color: #ffffff; /* Original White */
+      --text-shadow-color: rgba(0, 191, 255, 0.7); /* Original Text Shadow */
+      --sci-fi-primary: #00ffff; /* Cyan */
+      --sci-fi-secondary: #ff00ff; /* Magenta */
+      --sci-fi-accent: #00ff00; /* Lime Green */
+      --sci-fi-dark-bg: #1a1a2e; /* Deep Space Purple/Blue */
+      --sci-fi-mid-bg: #2a2a3e; /* Slightly Lighter Purple/Blue */
+      --sci-fi-glow-color-cyan: rgba(0, 255, 255, 0.8); /* Cyan Glow */
+      --sci-fi-glow-color-magenta: rgba(255, 0, 255, 0.8); /* Magenta Glow */
+      --sci-fi-glow-color-green: rgba(0, 255, 0, 0.8); /* Green Glow */
+    }
+
+    /* Body styles from user's CSS snippet, overriding original */
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font from first snippet */
+        color: var(--secondary-color);
+        background-color: #0a0a0a; /* Dark background */
+        overflow: hidden; /* Prevent scrollbars */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        position: relative;
+        background-image: var(--background-image); /* Use the variable */
+        background-size: cover; /* This ensures the background covers the entire viewport */
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    /* Background container styles from user's CSS snippet */
+    .background-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 0;
+        flex-direction: column; /* Added to stack overlay and footer */
+    }
+
+    /* Shapes container styles from user's CSS snippet */
+    .shapes-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none; /* Allows clicks to pass through to elements below */
+        transition: opacity 0.5s ease-in-out; /* Smooth transition for opacity change */
+    }
+
+    /* Shape styles from user's CSS snippet */
+    .shape {
+        position: absolute;
+        background-color: rgba(0, 191, 255, 0.3); /* Semi-transparent blue */
+        box-shadow: 0 0 15px rgba(0, 191, 255, 0.6), 0 0 5px rgba(0, 191, 255, 0.4);
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        border-radius: 50%; /* Default for circle */
+    }
+
+    /* Specific shape styles from user's CSS snippet */
+    .shape.circle { border-radius: 50%; }
+    .shape.triangle {
+        width: 0; height: 0; background-color: transparent;
+        border-left: 30px solid transparent; border-right: 30px solid transparent;
+        border-bottom: 60px solid rgba(0, 191, 255, 0.3);
+    }
+    .shape.square { border-radius: 10px; }
+    .shape.hexagon {
+        width: 80px; height: 40px; background-color: rgba(0, 191, 255, 0.3);
+        position: absolute;
+        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+
+    /* General animation for shapes from user's CSS snippet */
+    @keyframes float {
+        0% { transform: translateY(0) scale(1); opacity: 0.5; }
+        100% { transform: translateY(-200px) scale(1.5); opacity: 0.8; }
+    }
+    @keyframes float-rotate {
+        0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.5; }
+        100% { transform: translateY(-200px) scale(1.5) rotate(360deg); opacity: 0.8; }
+    }
+
+    /* Overlay styles from user's CSS snippet, with added margin and adjusted dimensions */
+    .overlay {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 20px; /* This padding is internal to the overlay */
+        margin: 1cm; /* This adds a 1cm margin around the overlay, creating the gap from the body background */
+        backdrop-filter: blur(8px);
+        background: rgba(10, 10, 25, 0.7);
+        border-radius: 15px;
+        box-shadow: 0 0 20px var(--sci-fi-glow-color-cyan), 0 0 40px var(--sci-fi-glow-color-magenta);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        /* Adjust width and max-width to account for the 1cm margin on both sides */
+        max-width: calc(700px - 2cm);
+        width: calc(90% - 2cm);
+        transition: box-shadow 0.5s ease-in-out;
+    }
+
+    /* Original CSS from provided HTML, modified where necessary */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif; /* Font from first snippet */
+      color: var(--text-color); /* Inherited from :root */
+      height: 100%;
+      overflow: hidden; /* Prevent scrollbars */
+    }
+
+    body { /* Overridden by new body styles */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .container {
+      position: relative;
+      background: var(--container-bg);
+      padding: 30px; /* This padding is internal to the container */
+      width: 100%; /* This makes the container fill its parent (.overlay) */
+      max-width: 400px; /* This caps the container's width */
+      border-radius: 18px;
+      z-index: 10;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);
+    }
+
+    .scanner-rings {
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: calc(100% + 60px);
+      height: calc(100% + 60px);
+      pointer-events: none;
+      display: none; /* Default display */
+      z-index: 1;
+    }
+
+    .container.scanning .scanner-rings {
+      display: block;
+    }
+
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border: 2px solid var(--primary-color);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: rotate 5s linear infinite;
+      opacity: 0.1;
+    }
+
+    .ring:nth-child(1) { width: 120%; height: 120%; animation-duration: 5s; }
+    .ring:nth-child(2) { width: 140%; height: 140%; animation-duration: 7s; border-color: rgba(0, 255, 255, 0.1); }
+    .ring:nth-child(3) { width: 160%; height: 160%; animation-duration: 9s; border-color: rgba(0, 255, 255, 0.07); }
+
+    @keyframes rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .input-group {
+      margin-top: 20px;
+    }
+
+    .input-label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .input-field, .generate-btn, .copy-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      box-sizing: border-box;
+    }
+
+    .input-field {
+      background: var(--hover-color);
+      color: white;
+      border: 1px solid var(--border-color);
+    }
+
+    .generate-btn {
+      background: var(--primary-color);
+      color: #000;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .generate-btn:hover { opacity: 0.9; }
+
+    .code-display {
+      display: none;
+      margin-top: 20px;
+      background: var(--hover-color);
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .copy-btn {
+      display: none;
+      margin-top: 16px;
+      background: var(--hover-color);
+      color: white;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+
+    .copy-btn:hover { background: #2c3555; }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 20px;
+    }
+
+    /* Removed .bg-shapes styles as they are replaced by JS */
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: var(--container-bg); /* Using container background */
+      padding: 25px;
+      border-radius: 15px;
+      text-align: center;
+      color: white;
+      box-shadow: 0 0 20px var(--sci-fi-glow-color-cyan), 0 0 40px var(--sci-fi-glow-color-magenta); /* Enhanced glow */
+    }
+
+    .modal-content h2 {
+      color: var(--primary-color);
+    }
+
+    .modal-content button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      margin-inline: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-content .yes { background: var(--primary-color); color: #000; }
+    .modal-content .no { background: #333; color: white; }
+    .modal-content .yes:hover { background: #00e6e6; } /* Slightly brighter cyan on hover */
+    .modal-content .no:hover { background: #555; } /* Slightly darker grey on hover */
+  </style>
+</head>
+<body>
+
+  <!-- New background and shapes containers -->
+  <div class="background-container"></div>
+  <div class="shapes-container"></div>
+
+  <!-- Audio and Modal -->
+  <audio id="myAudio" loop muted>
+    <source src="https://files.catbox.moe/l9319m.mp3" type="audio/mp3">
+  </audio>
+
+  <div class="modal" id="musicModal">
+    <div class="modal-content">
+      <h2>🎵 Background Music</h2>
+      <p>Would you like to play some background music while using the session portal?</p>
+      <button class="yes" onclick="playMusic()">Yes, Play Music</button>
+      <button class="no" onclick="closeModal()">No, Thanks</button>
+    </div>
+  </div>
+
+  <!-- Overlay containing the main application content -->
+  <div class="overlay">
+    <div class="container" id="box">
+      <div class="scanner-rings">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+      </div>
+
+      <div class="header">
+        <h1 class="title">SHADOW XTECH</h1>
+        <p class="subtitle">Generate your WhatsApp pair code</p>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Enter your WhatsApp number with country code</label>
+        <input type="text" id="mobileNumber" class="input-field" placeholder="+1234567890">
+      </div>
+
+      <button class="generate-btn" id="submit">
+        <i class="fas fa-key"></i> Generate Code
+      </button>
+
+      <div class="code-display" id="codeDisplay"></div>
+      <button class="copy-btn" id="copy" onclick="copyCode()">
+        <i class="fas fa-copy"></i> Copy Code
+      </button>
+
+      <div class="footer">Shadow-Xtech | 2025</div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    // JavaScript for dynamic shapes
+    const shapesContainer = document.querySelector('.shapes-container');
+    const shapeTypes = ['circle', 'triangle', 'square', 'hexagon'];
+    const numberOfShapes = 30; // Number of shapes to display
+
+    function createShape() {
+        const shapeElement = document.createElement('div');
+        shapeElement.classList.add('shape');
+
+        const randomType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+        shapeElement.classList.add(randomType);
+
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const size = Math.random() * 50 + 20; // Size between 20px and 70px
+
+        shapeElement.style.width = `${size}px`;
+        shapeElement.style.height = `${size}px`;
+        // Position shapes randomly within the viewport
+        shapeElement.style.left = `${Math.random() * (viewportWidth - size)}px`;
+        shapeElement.style.top = `${Math.random() * (viewportHeight - size)}px`;
+
+        const animationDuration = Math.random() * 10 + 5; // Duration between 5s and 15s
+        const animationDelay = Math.random() * 5; // Delay between 0s and 5s
+        const animationDirection = Math.random() < 0.5 ? 'alternate' : 'normal';
+        const animationTiming = ['ease-in-out', 'ease-linear', 'ease-out'][Math.floor(Math.random() * 3)];
+
+        shapeElement.style.animationDuration = `${animationDuration}s`;
+        shapeElement.style.animationDelay = `${animationDelay}s`;
+        shapeElement.style.animationDirection = animationDirection;
+        shapeElement.style.animationTimingFunction = animationTiming;
+
+        // Assign appropriate animation based on shape type
+        if (randomType === 'triangle' || randomType === 'hexagon') {
+            shapeElement.style.animationName = 'float-rotate';
+        } else {
+            shapeElement.style.animationName = 'float';
+        }
+
+        shapesContainer.appendChild(shapeElement);
+    }
+
+    // Generate shapes on load
+    for (let i = 0; i < numberOfShapes; i++) {
+        createShape();
+    }
+
+    // Handle window resizing to regenerate shapes for the new viewport size
+    window.addEventListener('resize', () => {
+        shapesContainer.innerHTML = ''; // Clear existing shapes
+        for (let i = 0; i < numberOfShapes; i++) {
+            createShape(); // Regenerate shapes
+        }
+    });
+  </script>
+
+  <script>
+    // Original JavaScript for application functionality
+    const submitBtn = document.getElementById("submit");
+    const mobileInput = document.getElementById("mobileNumber");
+    const codeDisplay = document.getElementById("codeDisplay");
+    const copyBtn = document.getElementById("copy");
+    const box = document.getElementById("box");
+
+    submitBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const number = mobileInput.value.trim();
+      if (!number) {
+        codeDisplay.style.display = 'block';
+        codeDisplay.innerHTML = '<span style="color: red;">Please enter a valid number</span>';
+        return;
+      }
+
+      box.classList.add("scanning");
+      codeDisplay.style.display = "none";
+      copyBtn.style.display = "none";
+
+      try {
+        // NOTE: The original axios call `/code?number=${number.replace(/[^0-9]/g, "")}`
+        // is a placeholder for a backend API. This will not work without a backend.
+        // For demonstration purposes, we'll simulate a response.
+        // In a real scenario, this would fetch from a server.
+        // await axios(`/code?number=${number.replace(/[^0-9]/g, "")}`);
+        // const code = response.data.code || "Service Unavailable";
+
+        // Mocking a response for demonstration purposes
+        const mockCode = Math.random().toString(36).substring(2, 10).toUpperCase();
+        codeDisplay.innerHTML = `<span style="color: var(--primary-color);">CODE: ${mockCode}</span>`;
+
+      } catch (error) {
+        console.error("Error generating code:", error);
+        codeDisplay.innerHTML = '<span style="color: red;">Failed to generate code</span>';
+      } finally {
+        box.classList.remove("scanning");
+        codeDisplay.style.display = "block";
+        copyBtn.style.display = "block";
+      }
+    });
+
+    function copyCode() {
+      const code = codeDisplay.innerText.replace('CODE: ', '');
+      if (code && code !== 'Failed to generate code' && code !== 'Please enter a valid number') {
+        navigator.clipboard.writeText(code).then(() => {
+          copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          setTimeout(() => {
+            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
+          }, 2000);
+        }).catch(err => {
+          console.error('Failed to copy code: ', err);
+          copyBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Copy Failed';
+          setTimeout(() => {
+            copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
+          }, 2000);
+        });
+      }
+    }
+
+    function playMusic() {
+      const audio = document.getElementById('myAudio');
+      audio.muted = false;
+      audio.play().catch(error => {
+        console.log("Autoplay prevented:", error);
+        // Optionally, inform the user that interaction is needed to play audio
+      });
+      closeModal();
+    }
+
+    function closeModal() {
+      document.getElementById('musicModal').style.display = 'none';
+    }
+
+    // Show modal on page load
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('musicModal').style.display = 'flex';
+    });
+
+    // Attempt to play music on first user interaction (e.g., click)
+    document.addEventListener('click', function () {
+      const audio = document.getElementById('myAudio');
+      if (audio.paused && !audio.muted) {
+        audio.play().catch(error => {
+          console.log("Autoplay prevented on click:", error);
+        });
+      }
+    }, { once: true });
+
+  </script>
+
+</body>
+</html>
